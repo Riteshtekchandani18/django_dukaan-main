@@ -4,7 +4,7 @@ from .models import Product
 class ProductFilter(django_filters.FilterSet):
     class Meta:
         model = Product
-        fields = ['brand':['exact'],
+        fields = {'brand':['exact'],
                   'category':['exact'],
-                  'sprice':['gte','it']]
+                  'sprice':['gte','it']}
 
