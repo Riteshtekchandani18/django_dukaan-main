@@ -1,3 +1,23 @@
 from django.shortcuts import render
+from .models import Product,Brand,Category
+from .filters import ProductFilter
+def all_products(request):
+    f = ProductFilter(request.GET, queryset=Product.objects.all())
+    print(f.get_filters())
+    return render(request,'shop/products.html',{
+        'filter':f,
+        'brands':Brand.objects.all(),
+        'categories':Category.objects.all()
+    })
 
-# Create your views here.
+def brand_products(request,brand):
+    pass
+
+def category_products(request,category):
+    pass
+
+def brands_category_products(request,brand,category):
+    pass
+
+def search_products(request):
+    pass
