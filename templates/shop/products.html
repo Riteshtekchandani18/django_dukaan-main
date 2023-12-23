@@ -1,31 +1,67 @@
 {% extends 'layout/base.html' %}
 {% load static %}
+{% load crispy_forms_tags %}
 
+{% block css %}
+<style>
+    .product-img {
+
+        height: 200px;
+        object-fit: contain;
+        object-position: top;
+    }
+</style>
+{% endblock css %}
 
 {% block body %}
+<div class="container">
+    <div class="d-flex gap-2 justify-content-center py-5">
+        <span class="d-flex align-items-center p-1 fw-bload">
+            Brands
+        </span>
+        
+        {% for brand in brands  %}
+        <span
+            class="badge d-flex align-items-center p-1 pe-2 text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-pill">
+            
+            {% if brand.logo  %}
+            <img class="rounded-circle me-1" width="24" height="24" src="{{brand.logo.url}}" alt="">  {{brand.name|title}}
+            {% else %}
+            <img class="rounded-circle me-1" width="24" height="24" src="{% static 'images/logodefault.gif' %}" alt="">{{brand.name|title}}  
+            {% endif %}
+                
+            
+        </span>
+            
+        {% empty %}
+        <span class="badge d-flex align-items-center p-1 pe-2 text-primary-emphasis bg-danger-subtle border border-danger-subtle rounded-pill">No data Available</span> 
+        {% endfor %}
+        
+    </div>
+</div>
 <div class="container py-5">
     <div class="row">
         <div class="col">
-            <form  method="get">
-                {{filter.form.as_p}}
+            <form method="get">
+                {{filter.form|crispy}}
                 <input type="submit" value="filter">
-            
+
             </form>
         </div>
-        <div class="col-md-8">
-            {% for item in filter.qs %}
-            {{item.name}}
-            {% empty %}
-            <div
-                class="alert alert-primary"
-                role="alert"
-            >
+        <div class="col-md-10">
+            <div class="container-fuild">
+                <div class="row">
+                    {% for item in filter.qs %}
+                    {% include 'components/product_card.html' with product=item %}
+                    {% empty %}
+                </div>
+            </div>
+            <div class="alert alert-primary" role="alert">
                 <strong>Warning</strong> No Product availvable
             </div>
             {% endfor %}
-            
+
         </div>
     </div>
 </div>
 {% endblock %}
-    

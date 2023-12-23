@@ -6,5 +6,5 @@ class ProductFilter(django_filters.FilterSet):
         model = Product
         fields = {'brand':['exact'],
                   'category':['exact'],
-                  'sprice':['gte','it']}
+                 }
 

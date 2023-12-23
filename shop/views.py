@@ -6,7 +6,7 @@ def all_products(request):
     print(f.get_filters())
     return render(request,'shop/products.html',{
         'filter':f,
-        'brands':Brand.objects.all(),
+        'brands':Brand.objects.filter(favorite=True),
         'categories':Category.objects.all()
     })
 
